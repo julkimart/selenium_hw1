@@ -43,15 +43,15 @@ public class InsuranceTest {
 
 
         //нажать на оформить-онлайн
-        driver.findElement(By.xpath("(//P[@class='kit-button kit-button_color_green kit-button_size_m'])[1]")).click();
+        driver.findElement(By.xpath("//a[@href='https://online.sberbankins.ru/store/vzr/index.html#/viewCalc']")).click();
 
 
         //переход на другое окно
         ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(newTab.get(2));
+        driver.switchTo().window(newTab.get(1));
 
         //выбрать минимальная
-        driver.findElement(By.xpath("//DIV[@ng-click='setProdProg(prodProg)']")).click();
+        driver.findElement(By.xpath("//*[contains(text(),'Минимальная')]")).click();
 
         //нажать на оформить
         driver.findElement(By.xpath("//SPAN[@ng-click='save()'][text()='Оформить']")).click();
@@ -101,7 +101,9 @@ public class InsuranceTest {
 
 
         //проверка что контактные данные не заполнены
-        assertEquals("Номер телефона вводится в 10-ти значном формате", driver.findElement(By.xpath("//SPAN[@class='b-text-field-error'][text()='Номер телефона вводится в 10-ти значном формате']")).getText());
+        //assertEquals("Номер телефона вводится в 10-ти значном формате", driver.findElement(By.xpath("//SPAN[@class='b-text-field-error'][text()='Номер телефона вводится в 10-ти значном формате']")).getText());
+        assertTrue("Номер телефона вводится в 10-ти значном формате", isElementPresent(driver.findElement(By.xpath("//SPAN[@class='b-text-field-error'][text()='Номер телефона вводится в 10-ти значном формате']"))));
+
     }
 
     @After
@@ -113,6 +115,18 @@ public class InsuranceTest {
     private void fillField(By locator, String value){
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(value);
+    }
+
+    public boolean isElementPresent(WebElement element) {
+        try {
+            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+        finally {
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        }
     }
 
 
