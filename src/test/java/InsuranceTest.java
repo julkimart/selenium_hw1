@@ -101,7 +101,6 @@ public class InsuranceTest {
 
 
         //проверка что контактные данные не заполнены
-        //assertEquals("Номер телефона вводится в 10-ти значном формате", driver.findElement(By.xpath("//SPAN[@class='b-text-field-error'][text()='Номер телефона вводится в 10-ти значном формате']")).getText());
         assertTrue("Номер телефона вводится в 10-ти значном формате", isElementPresent(driver.findElement(By.xpath("//SPAN[@class='b-text-field-error'][text()='Номер телефона вводится в 10-ти значном формате']"))));
 
     }
